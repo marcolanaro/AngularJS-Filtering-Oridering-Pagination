@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="App">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hotels</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+  </head>
+
+  <body ng-controller="AppCtrl">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Options</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Order By <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" ng-click="order('Distance');">
+                    <span ng-class="{true: 'glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-up'}[predicate === 'Distance']" ng-if="predicateInUse('Distance')"></span> Distance
+                </a></li>
+                <li><a href="#" ng-click="order('Stars');">
+                    <span ng-class="{true: 'glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-up'}[predicate === 'Stars']" ng-if="predicateInUse('Stars')"></span> Stars
+                </a></li>
+                <li><a href="#" ng-click="order('MinCost');">
+                    <span ng-class="{true: 'glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-up'}[predicate === 'MinCost']" ng-if="predicateInUse('MinCost')"></span> MinCost
+                </a></li>
+                <li><a href="#" ng-click="order('TrpRating');">
+                    <span ng-class="{true: 'glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-up'}[predicate === 'TrpRating']" ng-if="predicateInUse('TrpRating')"></span> TrpRating
+                </a></li>
+                <li><a href="#" ng-click="order('UserRating');">
+                    <span ng-class="{true: 'glyphicon glyphicon-arrow-down', false: 'glyphicon glyphicon-arrow-up'}[predicate === 'UserRating']" ng-if="predicateInUse('UserRating')"></span> UserRating
+                </a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Stars <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === Undefined]"><a href="#" ng-click="searchTerm.Stars=Undefined">-</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 0]"><a href="#" ng-click="searchTerm.Stars=0">
+                    <span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>
+                </a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 1]"><a href="#" ng-click="searchTerm.Stars=1">
+                    <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>
+                </a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 2]"><a href="#" ng-click="searchTerm.Stars=2">
+                    <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>
+                </a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 3]"><a href="#" ng-click="searchTerm.Stars=3">
+                    <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>
+                </a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 4]"><a href="#" ng-click="searchTerm.Stars=4">
+                    <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span>
+                </a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.Stars === 5]"><a href="#" ng-click="searchTerm.Stars=5">
+                    <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span>
+                </a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">UserRating <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === Undefined]"><a href="#" ng-click="searchTerm.UserRating=Undefined">-</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 0]"><a href="#" ng-click="searchTerm.UserRating=0">0</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 1]"><a href="#" ng-click="searchTerm.UserRating=1">1</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 2]"><a href="#" ng-click="searchTerm.UserRating=2">2</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 3]"><a href="#" ng-click="searchTerm.UserRating=3">3</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 4]"><a href="#" ng-click="searchTerm.UserRating=4">4</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 5]"><a href="#" ng-click="searchTerm.UserRating=5">5</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 6]"><a href="#" ng-click="searchTerm.UserRating=6">6</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 7]"><a href="#" ng-click="searchTerm.UserRating=7">7</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 8]"><a href="#" ng-click="searchTerm.UserRating=8">8</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 9]"><a href="#" ng-click="searchTerm.UserRating=9">9</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.UserRating === 10]"><a href="#" ng-click="searchTerm.UserRating=10">10</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">TrpRating <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === Undefined]"><a href="#" ng-click="searchTerm.TrpRating=Undefined">-</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 0]"><a href="#" ng-click="searchTerm.TrpRating=0">0 - 10000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 1]"><a href="#" ng-click="searchTerm.TrpRating=1">10000 - 50000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 2]"><a href="#" ng-click="searchTerm.TrpRating=2">50000 - 100000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 3]"><a href="#" ng-click="searchTerm.TrpRating=3">100000 - 250000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 4]"><a href="#" ng-click="searchTerm.TrpRating=4">250000 - 500000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.TrpRating === 5]"><a href="#" ng-click="searchTerm.TrpRating=5">500000 +</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">MinCost <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === Undefined]"><a href="#" ng-click="searchTerm.MinCost=Undefined">-</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 0]"><a href="#" ng-click="searchTerm.MinCost=0">0 - 500</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 1]"><a href="#" ng-click="searchTerm.MinCost=1">500 - 1000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 2]"><a href="#" ng-click="searchTerm.MinCost=2">1000 - 2000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 3]"><a href="#" ng-click="searchTerm.MinCost=3">2000 - 4000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 4]"><a href="#" ng-click="searchTerm.MinCost=4">4000 - 8000</a></li>
+                <li ng-class="{true: 'active', false: ''}[searchTerm.MinCost === 5]"><a href="#" ng-click="searchTerm.MinCost=5">8000 +</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right" role="form">
+            <div class="form-group"><input type="text" ng-model="searchDyn.Name" placeholder="Name" class="form-control"></div>
+            <div class="form-group"><input type="text" ng-model="searchDyn.Location" placeholder="Location" class="form-control"></div>
+          </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="starter-template">
+<div infinite-scroll='loadMore()' infinite-scroll-distance='1'>
+  <div ng-repeat="establishment in establishments">
+    <div class="row well">
+      <div class="col-lg-2 col-md-3 col-sm-5 col-sm-offset-1 col-md-offset-2 col-lg-offset-3">
+             <img src="{{establishment.ImageUrl}}" class="imgt img-thumbnail">
+      </div>
+      <div class="col-lg-7 col-md-7 col-sm-5"">
+           <h4>{{establishment.Name}}</h4>
+             <p><my-Stars ng-attr-number="3" value="{{establishment.Stars}}"></my-Stars></p>
+             <small>
+               <p>{{establishment.EstablishmentType}}</p>
+               <p>
+                 <span class="glyphicon glyphicon-pushpin"></span> {{establishment.Distance}} Km | 
+                 <span class="glyphicon glyphicon-map-marker"></span> {{establishment.Location}} | 
+                 <span class="glyphicon glyphicon-gbp"></span> {{establishment.MinCost}}
+               </p>
+               <p>
+                 <span class="glyphicon glyphicon-signal"></span> {{establishment.TrpRating}} | 
+                 <span class="glyphicon glyphicon-thumbs-up"></span> {{establishment.UserRating}} | 
+                 <span class="glyphicon glyphicon-user"></span> {{establishment.UserRatingCount}}
+               </p>
+             </small>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="./sillyhotels.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+    <script src="./js/ng-infinite-scroll.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
